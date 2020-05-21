@@ -16,8 +16,8 @@ _A Python package for clinical linguistic feature extraction in multiple languag
 
 For information about contributing, citing, licensing (including commercial licensing) and getting in touch, please see [our wiki](https://github.com/novoic/blabla/wiki).
 
-Our documentation can be found [here](https://blabla.readthedocs.io/en/latest). For a list of features and their language support, see `FEATURES.md`.
-  
+Our documentation can be found [here](https://blabla.readthedocs.io/en/latest). For a list of features and their language support, see [FEATURES.md](FEATURES.md).
+
 ## Setup
 Note that BlaBla requires **Python version 3.6** or later. To install BlaBla:
 ```bash
@@ -27,7 +27,7 @@ pip3 install .
 ```
 
 ### Installing CoreNLP
-For some features, BlaBla also requires [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/) to be installed. See `FEATURES.md` for a list of these features.
+For some features, BlaBla also requires [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/) to be installed. See [FEATURES.md](FEATURES.md) for a list of these features.
 
 To set up CoreNLP version 4.0.0, do `./setup_corenlp.sh` after changing `corenlp_dir` and `lang` if required. The legal `lang` parameters correspond to the languages available for CoreNLP:
 * `english`
@@ -64,15 +64,15 @@ For more details about usage, keep reading!
 BlaBla uses two config files for feature extraction. One of them specifies settings for the CoreNLP Server and the other specifies the list of features.
 
 ### Server config file
- 
+
 BlaBla comes with a predefined config file for Stanza and CoreNLP, which can be found at `stanza_config/stanza_config.yaml`. You don't need to modify any of these values. However, if want to run CoreNLP Server on a different port other than `9001`, change the port number.
 
 ### Input format
 
-BlaBla supports two types of inputs. You can either send a free form text as a sentence or a paragraph or an array of JSONs. 
+BlaBla supports two types of inputs. You can either send a free form text as a sentence or a paragraph or an array of JSONs.
 
 #### Free Text
-You can process natural language represented in the form of free text with BlaBla. A sample text file is provided at `example_configs/example_document.txt`. Note that we specify the input format `"string"` when we call the `analyze` method. 
+You can process natural language represented in the form of free text with BlaBla. A sample text file is provided at `example_configs/example_document.txt`. Note that we specify the input format `"string"` when we call the `analyze` method.
 
 ```python
 from blabla.document_processor import DocumentProcessor
@@ -84,22 +84,22 @@ with DocumentProcessor('stanza_config/stanza_config.yaml', 'en') as doc_proc:
 res = doc.compute_features('noun_rate')
 print(res)
  ```  
-    
+
 #### JSON Input
 BlaBla requires word-level time stamps for phonetic features. The JSON format should be in a format that contains words and timestamps for each of the word in the text. Each JSON in the array corresponds to one sentence. A sample format is provided in the `example_configs/example_document.json` file in this repository. Note that we specify the input format `"json"` when we call the `analyze` method.
- 
+
 ```python
 from blabla.document_processor import DocumentProcessor
 
 with DocumentProcessor('stanza_config/stanza_config.yaml', 'en') as doc_proc:
     content = open('example_configs/example_document.json').read()
     doc = doc_proc.analyze(content, 'json')
-    
+
 res = doc.compute_features('speech_rate')
 print(res)
 ```
- 
-**Note:** Please make sure the compatibility between the feature, language and input format is maintained. If your input format is `string`, and you ask for a feature supported only in JSON format which requires timestamps (such as `total_pause_time`), the code will throw an exception. Refer to `FEATURES.md` file for more information.
+
+**Note:** Please make sure the compatibility between the feature, language and input format is maintained. If your input format is `string`, and you ask for a feature supported only in JSON format which requires timestamps (such as `total_pause_time`), the code will throw an exception. Refer to [FEATURES.md](FEATURES.md) file for more information.
 
 ### Command line interface
 
@@ -115,4 +115,3 @@ When running the above CLI, you will need to provide the following arguments:
 * `-i`: path to the input directory of text or JSON files.
 * `-o`: path to the output CSV file. `test_output.csv` mentioned above.
 * `-format`: the format of the input files (either `string` or `json`).
-
